@@ -54,8 +54,8 @@ rc('font', family=font_name)
 for cnt, col in enumerate(df):
     try:
         plt.figure(figsize=(10, 5))
-        sns.distplot(df[col][df['PL 장비 JudgeType']==1])
-        sns.distplot(df[col][df['PL 장비 JudgeType']==0])
+        sns.histplot(df[col][df['PL 장비 JudgeType']==1])
+        sns.histplot(df[col][df['PL 장비 JudgeType']==0])
         plt.legend(['True','False'], loc='best')
         plt.title('histogram of features '+str(col))
         plt.show()
@@ -103,18 +103,21 @@ ax.set_zlabel('pcomp 3')
 plt.show()
 
 
-# Corrleation Heatmap --> 두 변수가 상관관계가 어떻게 되는지 시각화
-font_name = font_manager.FontProperties(fname="c:/Windows/Fonts/malgun.ttf").get_name()
-rc('font', family=font_name) # 한글 출력 설정 부분
+cols = ['PL 장비 JudgeType',' PL_Sum','PL_Average','PL_Max Value','EL_PW','EL_PI','EL_DW','EL_II','EL_FWHM','EL_IR(A)','EL_VR(V)','EL_VF1(V)','EL_VF2(V)','EL_VF3(V)','EL_PO-Top(W)','자체 Judge']
+corr = df_1[cols].corr(method = 'pearson')
 
-cancer_tmp = df_1.copy()
-cancer_tmp['PL 장비 JudgeType'] = df_1['PL 장비 JudgeType'].replace({'1':1, '0':0})
-corrmat = cancer_tmp.corr()
-top_corr_features = corrmat.index[abs(corrmat["PL 장비 JudgeType"])>=0.0]
-
-
-# plot
-plt.figure(figsize=(13,10))
-g = sns.heatmap(df[top_corr_features].corr(), annot=True, cmap="RdYlGn")
+corr.values
+column_names = ['PL 장비 JudgeType',' PL_Sum','PL_Average','PL_Max Value','EL_PW','EL_PI','EL_DW','EL_II','EL_FWHM','EL_IR(A)','EL_VR(V)','EL_VF1(V)','EL_VF2(V)','EL_VF3(V)','EL_PO-Top(W)','자체 Judge']
+sns.set(font_scale=1,rc={"axes.unicode_minus":False})
+plt.figure(figsize = (13,10))
+hm = sns.heatmap(corr.values, #데이터
+            cbar=True, #오른쪽 컬러 막대 출력 여부
+            annot=True, #차트에 숫자를 보여줄 것인지 여부
+            square=True, #차트를 정사각형으로 할 것인지
+            fmt='.2f', #숫자의 출력 소수점 자리 개수 조절
+            annot_kws={'size': 15}, #숫자 출력 시 숫자 크기 조절
+            yticklabels=column_names, #y축에 컬럼명 출력
+            xticklabels=column_names, #x축에 컬럼명 출력
+            cmap="RdYlGn") 
+plt.tight_layout()
 plt.show()
-
