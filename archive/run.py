@@ -46,7 +46,7 @@ for i in range(0,7590):
     else:
         df_1.loc[i,'Itself Judge'] = 0
      
-'''
+
 # Column distribution by target --> column 별로 데이터 분포를 시각화 해보는 것
 font_name = font_manager.FontProperties(fname="c:/Windows/Fonts/malgun.ttf").get_name()
 rc('font', family=font_name) 
@@ -65,7 +65,7 @@ for cnt, col in enumerate(df):
 
     except Exception as e:
         pass
-'''
+
 
 # 2 Dimension Plot --> 차원축소 기법을 이용하여 2차원으로 데이터를 시각화
 X = df.drop(['PL JudgeType','Error flag'], axis=1)
@@ -121,3 +121,8 @@ hm = sns.heatmap(corr.values, #데이터
             cmap="RdYlGn") 
 plt.tight_layout()
 plt.show()
+
+
+'''sns.set(style='whitegrid')
+sns.pairplot(df_1[['PL JudgeType',' PL_Sum','PL_Average','PL_Max Value','EL_PW','EL_PI','EL_DW','EL_II','EL_FWHM','EL_IR(A)','EL_VR(V)','EL_VF1(V)','EL_VF2(V)','EL_VF3(V)','EL_PO-Top(W)','Itself Judge']])
+plt.show()'''

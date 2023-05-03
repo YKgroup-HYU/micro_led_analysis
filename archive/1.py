@@ -9,7 +9,16 @@ df['PL JudgeType'].unique()  # PL JudgeType을 고유값으로 설정
 
 P0 = (7E-12 * df[' PL_Sum']-2.5E-7)
 
-#print(P0)
+a = []
+b = []
+for i in range(0,7590):
+    if 1.2E-6 > P0[i] > 0.4E-6 :
+        a.append(P0[i])
+        b.append(df['EL_PO-Top(W)'][i])
+        
+
+print(P0)
+print(a)
 print(df[' PL_Sum'])
-#plt.plot(df[' PL_Sum'],P0)
-#plt.show()
+plt.scatter(a,b)
+plt.show()
