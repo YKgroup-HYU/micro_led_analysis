@@ -8,22 +8,22 @@ from sklearn.ensemble import RandomForestClassifier
 df = pd.read_excel('./dat/Ver6.xlsx')
 df.drop(['No',' X Index',' Y Index',' X Size',' Y Size'],axis=1,inplace=True)
 
-df['PL 장비 JudgeType'].unique()  #array(['PL OK', 'PL NG'], dtype=object)
+df['PL JudgeType'].unique()  #array(['PL OK', 'PL NG'], dtype=object)
 
 
 for i in range(0,7590):
-    if df.loc[i,'PL 장비 JudgeType'] == 'PL OK':
-        df.loc[i,'PL 장비 JudgeType'] = 1
+    if df.loc[i,'PL JudgeType'] == 'PL OK':
+        df.loc[i,'PL JudgeType'] = 1
     else:
-        df.loc[i,'PL 장비 JudgeType'] = 0
+        df.loc[i,'PL JudgeType'] = 0
 
 for i in range(0,7590):
-    if df.loc[i,'자체 Judge'] == 'EL OK':
-        df.loc[i,'자체 Judge'] = 1
+    if df.loc[i,'Itself Judge'] == 'EL OK':
+        df.loc[i,'Itself Judge'] = 1
         df.loc[i,'Error flag'] = 'No error'
     else:
-        df.loc[i,'Error flag'] = df.loc[i,'자체 Judge']
-        df.loc[i,'자체 Judge'] = 0
+        df.loc[i,'Error flag'] = df.loc[i,'Itself Judge']
+        df.loc[i,'Itself Judge'] = 0
      
 
 #df.to_excel('./dat/new1.xlsx')
@@ -31,22 +31,22 @@ for i in range(0,7590):
 df_1 = pd.read_excel('./dat/Ver6.xlsx')
 df_1.drop(['No',' X Index',' Y Index',' X Size',' Y Size'],axis=1,inplace=True)
 
-df_1['PL 장비 JudgeType'].unique()  #array(['PL OK', 'PL NG'], dtype=object)
+df_1['PL JudgeType'].unique()  #array(['PL OK', 'PL NG'], dtype=object)
 
 
 for i in range(0,7590):
-    if df_1.loc[i,'PL 장비 JudgeType'] == 'PL OK':
-        df_1.loc[i,'PL 장비 JudgeType'] = 1
+    if df_1.loc[i,'PL JudgeType'] == 'PL OK':
+        df_1.loc[i,'PL JudgeType'] = 1
     else:
-        df_1.loc[i,'PL 장비 JudgeType'] = 0
+        df_1.loc[i,'PL JudgeType'] = 0
 
 for i in range(0,7590):
-    if df_1.loc[i,'자체 Judge'] == 'EL OK':
-        df_1.loc[i,'자체 Judge'] = 1
+    if df_1.loc[i,'Itself Judge'] == 'EL OK':
+        df_1.loc[i,'Itself Judge'] = 1
     else:
-        df_1.loc[i,'자체 Judge'] = 0
+        df_1.loc[i,'Itself Judge'] = 0
      
-
+'''
 # Column distribution by target --> column 별로 데이터 분포를 시각화 해보는 것
 font_name = font_manager.FontProperties(fname="c:/Windows/Fonts/malgun.ttf").get_name()
 rc('font', family=font_name) 
@@ -54,8 +54,8 @@ rc('font', family=font_name)
 for cnt, col in enumerate(df):
     try:
         plt.figure(figsize=(10, 5))
-        sns.histplot(df[col][df['PL 장비 JudgeType']==1])
-        sns.histplot(df[col][df['PL 장비 JudgeType']==0])
+        sns.histplot(df[col][df['PL JudgeType']==1])
+        sns.histplot(df[col][df['PL JudgeType']==0])
         plt.legend(['True','False'], loc='best')
         plt.title('histogram of features '+str(col))
         plt.show()
@@ -65,11 +65,11 @@ for cnt, col in enumerate(df):
 
     except Exception as e:
         pass
-
+'''
 
 # 2 Dimension Plot --> 차원축소 기법을 이용하여 2차원으로 데이터를 시각화
-X = df.drop(['PL 장비 JudgeType','Error flag'], axis=1)
-y = df['PL 장비 JudgeType']
+X = df.drop(['PL JudgeType','Error flag'], axis=1)
+y = df['PL JudgeType']
 
 scaler = StandardScaler()
 cancer_scale = pd.DataFrame(scaler.fit_transform(X), columns=X.columns)
@@ -95,7 +95,7 @@ data_pca3 = pca3.fit_transform(cancer_scale)
 
 fig = plt.figure(figsize=(12, 8))
 ax = fig.add_subplot(111, projection='3d')
-ax.scatter(data_pca3[:,0], data_pca3[:,1], data_pca3[:,2], c=df['PL 장비 JudgeType'], s=60, edgecolors='white')
+ax.scatter(data_pca3[:,0], data_pca3[:,1], data_pca3[:,2], c=df['PL JudgeType'], s=60, edgecolors='white')
 ax.set_title('3D of Target distribution by PL JudgeType')
 ax.set_xlabel('pcomp 1')
 ax.set_ylabel('pcomp 2')
@@ -103,11 +103,11 @@ ax.set_zlabel('pcomp 3')
 plt.show()
 
 
-cols = ['PL 장비 JudgeType',' PL_Sum','PL_Average','PL_Max Value','EL_PW','EL_PI','EL_DW','EL_II','EL_FWHM','EL_IR(A)','EL_VR(V)','EL_VF1(V)','EL_VF2(V)','EL_VF3(V)','EL_PO-Top(W)','자체 Judge']
+cols = ['PL JudgeType',' PL_Sum','PL_Average','PL_Max Value','EL_PW','EL_PI','EL_DW','EL_II','EL_FWHM','EL_IR(A)','EL_VR(V)','EL_VF1(V)','EL_VF2(V)','EL_VF3(V)','EL_PO-Top(W)','Itself Judge']
 corr = df_1[cols].corr(method = 'pearson')
 
 corr.values
-column_names = ['PL 장비 JudgeType',' PL_Sum','PL_Average','PL_Max Value','EL_PW','EL_PI','EL_DW','EL_II','EL_FWHM','EL_IR(A)','EL_VR(V)','EL_VF1(V)','EL_VF2(V)','EL_VF3(V)','EL_PO-Top(W)','자체 Judge']
+column_names = ['PL JudgeType',' PL_Sum','PL_Average','PL_Max Value','EL_PW','EL_PI','EL_DW','EL_II','EL_FWHM','EL_IR(A)','EL_VR(V)','EL_VF1(V)','EL_VF2(V)','EL_VF3(V)','EL_PO-Top(W)','Itself Judge']
 sns.set(font_scale=1,rc={"axes.unicode_minus":False})
 plt.figure(figsize = (13,10))
 hm = sns.heatmap(corr.values, #데이터
