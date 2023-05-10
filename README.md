@@ -51,3 +51,10 @@ Micro_LED에 대한 PL(Photoluminescence) 검사 데이터를 활용하여 EL(El
        - 데이터 값을 필터링 진행한 후 상위 두 그래프를 재도출한다.
        - PL 세기 데이터와 EL 전력 데이터 간의 상관관계를 도출하고 이를 바탕으로 근사식을 구할 수 있다.
        - 최종적으로 PL 데이터를 기반으로 하여 EL 데이터를 추출하여 불량률을 예측할 수 있다
+
+---
+
+## 5. 결과 
+
+#### 최조 결과를 Jupyter notebook 을 이용하여 Python code 기반으로 문서화 함. 
+* [최종 결과 문서](https://github.com/YKgroup-HYU/micro_led_analysis/blob/main/doc/Final%20Document.ipynb)
